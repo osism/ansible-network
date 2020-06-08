@@ -1,4 +1,6 @@
 ---
+network_type: interfaces
+
 # Flag whether all network devices are controlled by this role
 #
 # If true, all additional scripts are deleted
