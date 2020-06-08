@@ -1,4 +1,25 @@
 ---
+- name: Get existing netplan configuration files
+  find:
+    paths: /etc/netplan
+    patterns: "*.yml,*.yaml"
+  register: netplan_configuration_files
+
+- name: Backup existing netplan configuration files
+  copy:
+    src: "{{ item['path'] }}"
+    dest: "{{ item['path'] }}.unused"
+    remote_src: true
+  become: true
+  with_items: "{{ netplan_configuration_files['files'] }}"
+
+- name: Remove existing netplan configuration files
+  file:
+    path: "{{ item['path'] }}"
+    state: absent
+  become: true
+  with_items: "{{ netplan_configuration_files['files'] }}"
+
 - name: Gather variables for each operating system
   include_vars: "{{ item }}"
   with_first_found:
