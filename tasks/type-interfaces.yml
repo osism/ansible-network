@@ -37,7 +37,7 @@
     state: present
     update_cache: yes
     cache_valid_time: 86400
-  when: network_interfaces
+  when: network_interfaces|length > 0
 
 - name: Create required directories
   file:
@@ -45,7 +45,7 @@
     state: directory
   with_items:
     - "{{ network_interface_path }}"
-  when: network_interfaces
+  when: network_interfaces|length > 0
 
 - name: Copy interfaces file
   template:
@@ -53,7 +53,7 @@
     dest: "{{ network_all_interfaces_path }}"
   notify:
     - Interfaces file changed
-  when: network_interfaces
+  when: network_interfaces|length > 0
 
 - name: Copy device configuration files
   template:
@@ -71,4 +71,4 @@
   include: cleanup-interfaces.yml
   when:
     - network_manage_devices
-    - network_interfaces
+    - network_interfaces|length > 0
