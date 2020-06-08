@@ -23,13 +23,13 @@
 - name: Gather variables for each operating system
   include_vars: "{{ item }}"
   with_first_found:
-  - "interfaces/{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
-  - "interfaces/{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-  - "interfaces/{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-  - "interfaces/{{ ansible_distribution | lower }}.yml"
-  - "interfaces/{{ ansible_os_family | lower }}.yml"
+    - "interfaces/{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+    - "interfaces/{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "interfaces/{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "interfaces/{{ ansible_distribution | lower }}.yml"
+    - "interfaces/{{ ansible_os_family | lower }}.yml"
   tags:
-  - always
+    - always
 
 - name: Ensure basic networking tools are installed
   apt:
