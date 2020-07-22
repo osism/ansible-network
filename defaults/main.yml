@@ -91,3 +91,9 @@ network_interface_required_packages:
   - ifmetric
   - ifupdown
   - vlan
+
+# lldpd
+
+network_lldpd: false
+network_lldpd_package_name: lldpd
+network_lldpd_service_name: lldpd

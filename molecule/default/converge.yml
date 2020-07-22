@@ -6,6 +6,7 @@
   vars:
     network_restart_method: nothing
     network_allow_service_restart: no
+    network_lldpd: yes
 
   roles:
     - role: ansible-network
