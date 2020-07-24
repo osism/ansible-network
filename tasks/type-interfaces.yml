@@ -11,14 +11,14 @@
     dest: "{{ item['path'] }}.unused"
     remote_src: true
   become: true
-  with_items: "{{ netplan_configuration_files['files'] }}"
+  loop: "{{ netplan_configuration_files['files'] }}"
 
 - name: Remove existing netplan configuration files
   file:
     path: "{{ item['path'] }}"
     state: absent
   become: true
-  with_items: "{{ netplan_configuration_files['files'] }}"
+  loop: "{{ netplan_configuration_files['files'] }}"
 
 - name: Gather variables for each operating system
   include_vars: "{{ item }}"
@@ -43,7 +43,7 @@
   file:
     path: "{{ item }}"
     state: directory
-  with_items:
+  loop:
     - "{{ network_interface_path }}"
   when: network_interfaces|length > 0
 
@@ -60,7 +60,7 @@
     src: interfaces/device.j2
     dest: "{{ network_interface_path }}/device-{{ item.0 }}"
     mode: "{{ network_interface_permissions }}"
-  with_items:
+  loop:
     - "{{ network_interfaces | default([]) | groupby('device') }}"
   register: network_configuration_result
   notify:
